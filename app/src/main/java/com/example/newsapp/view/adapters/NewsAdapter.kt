@@ -1,17 +1,25 @@
 package com.example.newsapp.view.adapters
 
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.navigation.Navigation.findNavController
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.newsapp.R
 import com.example.newsapp.model.api.Article
+import com.example.newsapp.view.fragments.BreakingNewsFragment
 import kotlinx.android.synthetic.main.item_article_preview.view.*
 
-class BreakingNewsAdapter: RecyclerView.Adapter<BreakingNewsAdapter.ArticleViewHolder>() {
+class NewsAdapter(
+    private val fragment: Fragment
+): RecyclerView.Adapter<NewsAdapter.ArticleViewHolder>() {
 
     private val differCallback = object : DiffUtil.ItemCallback<Article>(){
         override fun areItemsTheSame(oldItem: Article, newItem: Article): Boolean {
@@ -50,6 +58,12 @@ class BreakingNewsAdapter: RecyclerView.Adapter<BreakingNewsAdapter.ArticleViewH
                 }
             }
         }
+
+//        holder.itemView.setOnClickListener{
+//            if (fragment is BreakingNewsFragment){
+//                fragment.articleWebView(article)
+//            }
+//        }
     }
 
     override fun getItemCount(): Int {
@@ -61,6 +75,6 @@ class BreakingNewsAdapter: RecyclerView.Adapter<BreakingNewsAdapter.ArticleViewH
     private var onItemClickListener: ((Article) -> Unit)? = null
 
     fun setOnItemClickListener(listener: (Article) -> Unit){
-
+        onItemClickListener = listener
     }
 }

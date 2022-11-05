@@ -2,7 +2,6 @@ package com.example.newsapp.model.api
 
 import com.example.newsapp.util.Constants.Companion.API_KEY
 import io.reactivex.rxjava3.core.Single
-import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -22,7 +21,7 @@ interface NewsApi {
 
 
     @GET("v2/everything")
-    suspend fun searchNews(
+    fun searchNews(
         @Query("q")
         searchQuery: String,
 
@@ -31,5 +30,5 @@ interface NewsApi {
 
         @Query("apiKey")
         apiKey: String = API_KEY,
-    ) : Response<NewsResponse>
+    ) : Single<NewsResponse>
 }

@@ -20,4 +20,8 @@ class RetrofitInstance {
     fun getBreakingNews() : Single<NewsResponse>{
         return api.getBreakingNews(COUNTRY, 1, API_KEY)
     }
+
+    fun getSearchNewsResult(searchQuery: String): Single<NewsResponse>{
+        return api.searchNews(searchQuery, 1, API_KEY)
+    }
 }

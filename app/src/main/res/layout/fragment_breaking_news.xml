@@ -28,7 +28,7 @@
         app:layout_constraintBottom_toBottomOf="parent"/>
 
     <ProgressBar
-        android:id="@+id/paginationProgressBar"
+        android:id="@+id/paginationProgressBarBreakingNews"
         style="?attr/progressBarStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

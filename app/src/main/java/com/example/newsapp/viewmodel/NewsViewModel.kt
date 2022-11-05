@@ -9,14 +9,20 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.observers.DisposableSingleObserver
 import io.reactivex.rxjava3.schedulers.Schedulers
 
-class BreakingNewsViewModel: ViewModel() {
+class NewsViewModel: ViewModel() {
     private val retrofitInstance = RetrofitInstance()
 
     private val compositeDisposable = CompositeDisposable()
 
+//    BreakingNews states -
     val loadNews = MutableLiveData<Boolean>()
     val newsResponse = MutableLiveData<NewsResponse>()
     val errorLoadingNews = MutableLiveData<Boolean>()
+
+//    Search News states -
+    val loadSearchNews = MutableLiveData<Boolean>()
+    val searchNewsResponse = MutableLiveData<NewsResponse>()
+    val errorLoadingSearchNews = MutableLiveData<Boolean>()
 
     fun getBreakingNewsFromAPI(){
         loadNews.value = true
@@ -40,4 +46,25 @@ class BreakingNewsViewModel: ViewModel() {
         )
     }
 
+    fun searchNews(searchQuery: String){
+        loadSearchNews.value = true
+        compositeDisposable.add(
+            retrofitInstance.getSearchNewsResult(searchQuery)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(object : DisposableSingleObserver<NewsResponse>(){
+                    override fun onSuccess(value: NewsResponse) {
+                        loadSearchNews.value = false
+                        searchNewsResponse.value = value
+                        errorLoadingSearchNews.value = false
+                    }
+
+                    override fun onError(e: Throwable) {
+                        loadSearchNews.value = false
+                        errorLoadingSearchNews.value = true
+                        e.printStackTrace()
+                    }
+                })
+        )
+    }
 }
