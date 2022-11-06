@@ -1,13 +1,11 @@
 package com.example.newsapp.view.adapters
 
-import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.navigation.Navigation.findNavController
-import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -15,7 +13,7 @@ import com.bumptech.glide.Glide
 import com.example.newsapp.R
 import com.example.newsapp.model.api.Article
 import com.example.newsapp.view.fragments.BreakingNewsFragment
-import kotlinx.android.synthetic.main.item_article_preview.view.*
+import com.example.newsapp.view.fragments.SearchNewsFragment
 
 class NewsAdapter(
     private val fragment: Fragment
@@ -42,39 +40,41 @@ class NewsAdapter(
 
     override fun onBindViewHolder(holder: ArticleViewHolder, position: Int) {
         val article = differ.currentList[position]
-        holder.itemView.apply {
-            Glide.with(this)
-                .load(article.urlToImage)
-                .into(ivArticleImage)
+        holder.tvSource.text = article.source.name
+        holder.tvDescription.text = article.description
+        holder.tvTitle.text = article.title
+        holder.tvPublishedAt.text = article.publishedAt
 
-            tvSource.text = article.source.name
-            tvDescription.text = article.description
-            tvTitle.text = article.title
-            tvPublishedAt.text = article.publishedAt
+        Glide.with(fragment)
+            .load(article.urlToImage)
+            .into(holder.ivArticleImage)
 
-            setOnClickListener{
-                onItemClickListener?.let {
-                    it(article)
-                }
+
+        holder.itemView.setOnClickListener{
+            if (fragment is BreakingNewsFragment){
+                fragment.articleWebView(article)
+            }
+            else if (fragment is SearchNewsFragment){
+                fragment.articleWebView(article)
             }
         }
-
-//        holder.itemView.setOnClickListener{
-//            if (fragment is BreakingNewsFragment){
-//                fragment.articleWebView(article)
-//            }
-//        }
     }
 
     override fun getItemCount(): Int {
         return differ.currentList.size
     }
 
-    inner class ArticleViewHolder(itemView: View): RecyclerView.ViewHolder(itemView)
-
-    private var onItemClickListener: ((Article) -> Unit)? = null
-
-    fun setOnItemClickListener(listener: (Article) -> Unit){
-        onItemClickListener = listener
+    inner class ArticleViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
+        val tvSource: TextView = itemView.findViewById(R.id.tvSource)
+        val tvDescription: TextView = itemView.findViewById(R.id.tvDescription)
+        val tvPublishedAt: TextView = itemView.findViewById(R.id.tvPublishedAt)
+        val tvTitle: TextView = itemView.findViewById(R.id.tvTitle)
+        val ivArticleImage : ImageView = itemView.findViewById(R.id.ivArticleImage)
     }
+
+//    var onItemClickListener: ((Article) -> Unit)? = null
+//
+//    fun setOnItemClickListener(listener: (Article) -> Unit){
+//        onItemClickListener = listener
+//    }
 }

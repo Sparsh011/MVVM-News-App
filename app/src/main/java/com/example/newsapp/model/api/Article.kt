@@ -1,9 +1,11 @@
 package com.example.newsapp.model.api
 
+import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import java.io.Serializable
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 @Entity(
     tableName = "articles"
 )
@@ -18,4 +20,13 @@ data class Article(
     val title: String,
     val url: String,
     val urlToImage: String
-) : Serializable
+) : Parcelable{
+    override fun hashCode(): Int {
+        var result = id.hashCode()
+        if (url.isNullOrEmpty()){
+            result = 31 * result + url.hashCode()
+        }
+
+        return result
+    }
+}

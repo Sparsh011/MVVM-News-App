@@ -1,18 +1,35 @@
 package com.example.newsapp.view.activities
 
+import android.app.Activity
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.navigation.NavController
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.newsapp.R
-import kotlinx.android.synthetic.main.activity_news.*
+import com.example.newsapp.databinding.ActivityNewsBinding
 
 class NewsActivity : AppCompatActivity() {
+    private lateinit var mBinding: ActivityNewsBinding
+    private lateinit var mNavController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_news)
+        mBinding = ActivityNewsBinding.inflate(layoutInflater)
+        setContentView(mBinding.root)
 
-        bottomNavigationView.setupWithNavController(newsNavHostFragment.findNavController())
+
+        mNavController = findNavController(R.id.newsNavHostFragment)
+
+        val appBarConfiguration = AppBarConfiguration(
+            setOf(
+                R.id.breakingNewsFragment, R.id.searchNewsFragment, R.id.articleFragment, R.id.savedNewsFragment
+            )
+        )
+        setupActionBarWithNavController(mNavController, appBarConfiguration)
+        mBinding.bottomNavigationView.setupWithNavController(mNavController)
     }
 }
