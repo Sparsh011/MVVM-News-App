@@ -32,7 +32,6 @@ class SearchNewsFragment : Fragment(R.layout.fragment_search_news) {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         mBinding = FragmentSearchNewsBinding.inflate(inflater, container, false)
-        // Inflate the layout for this fragment
         return mBinding!!.root
     }
 
