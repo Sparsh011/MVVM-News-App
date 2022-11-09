@@ -1,8 +1,8 @@
 package com.example.newsapp.model.database
 
-import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.example.newsapp.model.api.Article
+import kotlinx.coroutines.flow.Flow
 
 
 @Dao
@@ -12,7 +12,7 @@ interface ArticleDAO {
     suspend fun updateOrInsertArticle(article: Article) : Long // returns the id that was inserted
 
     @Query("SELECT * FROM articles")
-    fun retrieveSavedArticles() : LiveData<List<Article>>
+    fun retrieveSavedArticles() : Flow<List<Article>>
 
     @Delete
     suspend fun deleteArticle(article: Article)

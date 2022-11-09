@@ -13,6 +13,7 @@ import com.bumptech.glide.Glide
 import com.example.newsapp.R
 import com.example.newsapp.model.api.Article
 import com.example.newsapp.view.fragments.BreakingNewsFragment
+import com.example.newsapp.view.fragments.SavedNewsFragment
 import com.example.newsapp.view.fragments.SearchNewsFragment
 
 class NewsAdapter(
@@ -55,6 +56,9 @@ class NewsAdapter(
                 fragment.articleWebView(article)
             }
             else if (fragment is SearchNewsFragment){
+                fragment.articleWebView(article)
+            }
+            else if (fragment is SavedNewsFragment){
                 fragment.articleWebView(article)
             }
         }

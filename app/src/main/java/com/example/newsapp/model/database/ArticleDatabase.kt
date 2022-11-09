@@ -11,7 +11,7 @@ import com.example.newsapp.model.api.Article
 @Database(entities = [Article::class], version = 1)
 @TypeConverters(Converters::class)
 
-abstract class ArticleDatabase : RoomDatabase() {
+abstract class ArticleDatabase() : RoomDatabase() {
 
     abstract fun articleDao() : ArticleDAO
 
@@ -20,8 +20,6 @@ abstract class ArticleDatabase : RoomDatabase() {
         private var INSTANCE : ArticleDatabase? = null
 
         fun getDatabase(context: Context): ArticleDatabase{
-
-//            If the instance is null, then create the database, and if it is not null, then return it.
             return INSTANCE?: synchronized(this){
                 val instance = Room.databaseBuilder(
                     context.applicationContext,

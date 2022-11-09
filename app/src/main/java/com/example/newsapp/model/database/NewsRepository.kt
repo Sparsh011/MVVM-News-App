@@ -1,10 +1,26 @@
 package com.example.newsapp.model.database
 
-import com.example.newsapp.model.api.RetrofitInstance
-import retrofit2.Retrofit
+import androidx.annotation.WorkerThread
+import androidx.room.Delete
+import com.example.newsapp.model.api.Article
+import kotlinx.coroutines.flow.Flow
 
 class NewsRepository(
-    val database: ArticleDatabase
+    private val articleDAO: ArticleDAO
 ) {
+
+    @WorkerThread
+    suspend fun addArticle(article: Article){
+        articleDAO.updateOrInsertArticle(article)
+    }
+
+
+    @WorkerThread
+    suspend fun deleteArticle(article: Article){
+        articleDAO.deleteArticle(article)
+    }
+
+
+    val savedArticles: Flow<List<Article>> = articleDAO.retrieveSavedArticles()
 
 }

@@ -17,7 +17,7 @@ class NewsActivity : AppCompatActivity() {
     private lateinit var mNavController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+        super.onCreate(null)
         mBinding = ActivityNewsBinding.inflate(layoutInflater)
         setContentView(mBinding.root)
 
