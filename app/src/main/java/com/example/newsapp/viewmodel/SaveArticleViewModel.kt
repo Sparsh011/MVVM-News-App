@@ -1,9 +1,7 @@
 package com.example.newsapp.viewmodel
 
-import android.app.Application
 import androidx.lifecycle.*
 import com.example.newsapp.model.api.Article
-import com.example.newsapp.model.database.ArticleDatabase
 import com.example.newsapp.model.database.NewsRepository
 import kotlinx.coroutines.launch
 

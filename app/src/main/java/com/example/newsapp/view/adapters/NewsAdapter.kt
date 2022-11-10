@@ -41,7 +41,7 @@ class NewsAdapter(
 
     override fun onBindViewHolder(holder: ArticleViewHolder, position: Int) {
         val article = differ.currentList[position]
-        holder.tvSource.text = article.source.name
+        holder.tvSource.text = article.source?.name
         holder.tvDescription.text = article.description
         holder.tvTitle.text = article.title
         holder.tvPublishedAt.text = article.publishedAt

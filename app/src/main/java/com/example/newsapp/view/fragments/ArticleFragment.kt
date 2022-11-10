@@ -8,13 +8,13 @@ import android.webkit.WebViewClient
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
 import com.example.newsapp.R
 import com.example.newsapp.application.NewsApplication
 import com.example.newsapp.databinding.FragmentArticleBinding
 import com.example.newsapp.viewmodel.SaveArticleViewModel
 import com.example.newsapp.viewmodel.SaveArticleViewModelProviderFactory
+
 
 class ArticleFragment : Fragment(R.layout.fragment_article) {
     private val args: ArticleFragmentArgs by navArgs()
@@ -37,10 +37,11 @@ class ArticleFragment : Fragment(R.layout.fragment_article) {
             val article = it.article
             mBinding?.webView.apply {
                 this?.webViewClient = WebViewClient()
-                this?.loadUrl(article.url)
+                article.url.let { url ->
+                    this?.loadUrl(url.toString())
+                }
             }
         }
-
         mBinding?.fabSaveNews?.setOnClickListener{
             mSaveArticleViewModel.insert(args.article)
             Toast.makeText(context, "Article Saved!", Toast.LENGTH_SHORT).show()

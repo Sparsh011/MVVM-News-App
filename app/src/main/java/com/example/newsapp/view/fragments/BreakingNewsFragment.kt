@@ -43,7 +43,7 @@ class BreakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
         breakingNewsViewModel.newsResponse.observe(viewLifecycleOwner){ breakingNewsResponse ->
             breakingNewsResponse?.let {
                 mBinding?.rvBreakingNews?.visibility = View.VISIBLE
-                setNewsResponseInUI(breakingNewsResponse)
+                setNewsResponseInUI(it)
                 hideProgressBar()
             }
         }

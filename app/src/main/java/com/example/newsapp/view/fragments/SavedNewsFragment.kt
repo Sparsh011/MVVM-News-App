@@ -4,10 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -36,6 +34,7 @@ class SavedNewsFragment : Fragment(R.layout.fragment_saved_news) {
         super.onViewCreated(view, savedInstanceState)
 
         val adapter = NewsAdapter(this)
+
         mSaveArticleViewModel.savedArticlesList.observe(viewLifecycleOwner){ articles ->
 
             articles.let {
@@ -44,10 +43,8 @@ class SavedNewsFragment : Fragment(R.layout.fragment_saved_news) {
 
                 if (it.isNotEmpty()){
                     mBinding!!.rvSavedNews.visibility = View.VISIBLE
+                    mBinding!!.tvNoSavedArticles.visibility = View.GONE
                     adapter.differ.submitList(articles)
-                }
-                else{
-                    Toast.makeText(context, "No Saved Article!", Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -68,6 +65,9 @@ class SavedNewsFragment : Fragment(R.layout.fragment_saved_news) {
                 val position = viewHolder.adapterPosition
                 val article = adapter.differ.currentList[position]
                 mSaveArticleViewModel.delete(article)
+                if (position == 0){
+                    mBinding!!.tvNoSavedArticles.visibility = View.VISIBLE
+                }
 
                 Snackbar.make(view, "Article Deleted!", Snackbar.LENGTH_LONG).apply {
                     setAction("UNDO"){

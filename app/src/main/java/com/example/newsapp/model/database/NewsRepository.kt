@@ -1,7 +1,6 @@
 package com.example.newsapp.model.database
 
 import androidx.annotation.WorkerThread
-import androidx.room.Delete
 import com.example.newsapp.model.api.Article
 import kotlinx.coroutines.flow.Flow
 
