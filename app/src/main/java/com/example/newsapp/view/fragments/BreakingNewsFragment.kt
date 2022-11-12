@@ -38,7 +38,8 @@ class BreakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
         setupRecyclerView()
         breakingNewsViewModel = ViewModelProvider(this)[NewsViewModel::class.java]
 
-        breakingNewsViewModel.getBreakingNewsFromAPI()
+
+        breakingNewsViewModel.safeBreakingNewsCall()
         breakingNewsViewModelObserver()
     }
 
@@ -89,7 +90,7 @@ class BreakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
             val shouldPaginate = isNotLoadingAndNotLastPage && isAtLastItem && isNotAtBeginning && isTotalMoreThanVisible && isScrolling
 
             if (shouldPaginate){
-                breakingNewsViewModel.getBreakingNewsFromAPI()
+                breakingNewsViewModel.safeBreakingNewsCall()
                 isScrolling = false
             }
         }

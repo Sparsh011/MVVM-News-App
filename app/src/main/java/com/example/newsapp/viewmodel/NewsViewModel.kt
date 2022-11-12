@@ -1,15 +1,25 @@
 package com.example.newsapp.viewmodel
 
+import android.app.Application
+import android.content.Context
+import android.net.ConnectivityManager
+import android.net.ConnectivityManager.*
+import android.net.NetworkCapabilities.*
+import android.os.Build
+import android.os.Build.VERSION_CODES.M
+import android.util.Log
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import com.example.newsapp.application.NewsApplication
 import com.example.newsapp.model.api.NewsResponse
 import com.example.newsapp.model.api.RetrofitInstance
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.observers.DisposableSingleObserver
 import io.reactivex.rxjava3.schedulers.Schedulers
+import java.io.IOException
 
-class NewsViewModel: ViewModel() {
+class NewsViewModel(app: Application): AndroidViewModel(app) {
     private val retrofitInstance = RetrofitInstance()
 
     private val compositeDisposable = CompositeDisposable()
@@ -24,10 +34,10 @@ class NewsViewModel: ViewModel() {
     val searchNewsResponse = MutableLiveData<NewsResponse>()
     val errorLoadingSearchNews = MutableLiveData<Boolean>()
 
-//    Page numbers -
+//    Page number for pagination -
     var breakingNewsPageNumber = 1
 
-    fun getBreakingNewsFromAPI(){
+    private fun getBreakingNewsFromAPI(){
         loadNews.value = true
         compositeDisposable.add(
             retrofitInstance.getBreakingNews(breakingNewsPageNumber)
@@ -59,7 +69,7 @@ class NewsViewModel: ViewModel() {
         )
     }
 
-    fun searchNews(searchQuery: String){
+    private fun searchNews(searchQuery: String){
         loadSearchNews.value = true
         compositeDisposable.add(
             retrofitInstance.getSearchNewsResult(searchQuery)
@@ -79,5 +89,68 @@ class NewsViewModel: ViewModel() {
                     }
                 })
         )
+    }
+
+    fun safeBreakingNewsCall(){
+        try {
+            if (hasInternetConnection()){
+                getBreakingNewsFromAPI()
+            }
+            else{
+                Log.i("No Internet", "No internet connection")
+            }
+        } catch (t: Throwable){
+            when(t){
+                is IOException -> Log.i("IOException", t.message.toString())
+                else -> Log.i("Other Exception", t.message.toString())
+            }
+        }
+    }
+
+    fun safeSearchNewsCall(searchQuery: String){
+        try {
+            if (hasInternetConnection()){
+                searchNews(searchQuery)
+            }
+            else{
+                Log.i("No Internet", "No internet connection")
+            }
+        } catch (t: Throwable){
+            when(t){
+                is IOException -> Log.i("IOException", t.message.toString())
+                else -> Log.i("Other Exception", t.message.toString())
+            }
+        }
+    }
+
+    private fun hasInternetConnection() : Boolean{
+        val connectivityManager = getApplication<NewsApplication>().getSystemService(
+            Context.CONNECTIVITY_SERVICE
+        ) as ConnectivityManager
+
+        if (Build.VERSION.SDK_INT >= M){
+            val activeNetwork = connectivityManager.activeNetwork ?: return false
+            val capabilities = connectivityManager.getNetworkCapabilities(activeNetwork) ?: return false
+            return when{
+                capabilities.hasTransport(TRANSPORT_WIFI) -> true
+                capabilities.hasTransport(TRANSPORT_CELLULAR) -> true
+                capabilities.hasTransport(TRANSPORT_ETHERNET) -> true
+
+                else -> false
+            }
+        }
+        else{
+            connectivityManager.activeNetworkInfo?.run {
+                return when(type){
+                    TYPE_WIFI -> true
+                    TYPE_MOBILE -> true
+                    TYPE_ETHERNET -> true
+
+                    else -> false
+                }
+            }
+        }
+
+        return false
     }
 }

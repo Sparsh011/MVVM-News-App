@@ -26,11 +26,10 @@ import kotlinx.coroutines.launch
 class SearchNewsFragment : Fragment(R.layout.fragment_search_news) {
     private lateinit var searchViewModel: NewsViewModel
     private lateinit var newsAdapter: NewsAdapter
-    val TAG = "SearchNewsFragment"
     private var mBinding: FragmentSearchNewsBinding? = null
 
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         mBinding = FragmentSearchNewsBinding.inflate(inflater, container, false)
         return mBinding!!.root
     }
@@ -48,7 +47,7 @@ class SearchNewsFragment : Fragment(R.layout.fragment_search_news) {
                 delay(SEARCH_NEWS_TIME_DELAY)
                 editable?.let {
                     if (editable.toString().isNotEmpty()){
-                        searchViewModel.searchNews(editable.toString())
+                        searchViewModel.safeSearchNewsCall(editable.toString())
                     }
                 }
             }
