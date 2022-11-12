@@ -24,16 +24,29 @@ class NewsViewModel: ViewModel() {
     val searchNewsResponse = MutableLiveData<NewsResponse>()
     val errorLoadingSearchNews = MutableLiveData<Boolean>()
 
+//    Page numbers -
+    var breakingNewsPageNumber = 1
+
     fun getBreakingNewsFromAPI(){
         loadNews.value = true
         compositeDisposable.add(
-            retrofitInstance.getBreakingNews()
+            retrofitInstance.getBreakingNews(breakingNewsPageNumber)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(object : DisposableSingleObserver<NewsResponse>(){
                     override fun onSuccess(value: NewsResponse) {
+                        if (newsResponse.value == null){
+                            newsResponse.value = value
+                        }
+                        else{
+                            val oldArticles = newsResponse.value!!.articles
+                            val newArticles = value.articles
+                            oldArticles.addAll(newArticles)
+                            val newNewsResponse = NewsResponse(oldArticles, newsResponse.value!!.status, oldArticles.size)
+                            newsResponse.value = newNewsResponse
+                        }
+                        breakingNewsPageNumber++
                         loadNews.value = false
-                        newsResponse.value = value
                         errorLoadingNews.value = false
                     }
 
@@ -54,8 +67,8 @@ class NewsViewModel: ViewModel() {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(object : DisposableSingleObserver<NewsResponse>(){
                     override fun onSuccess(value: NewsResponse) {
-                        loadSearchNews.value = false
                         searchNewsResponse.value = value
+                        loadSearchNews.value = false
                         errorLoadingSearchNews.value = false
                     }
 
