@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.size
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -67,6 +68,8 @@ class SavedNewsFragment : Fragment(R.layout.fragment_saved_news) {
                 mSaveArticleViewModel.delete(article)
                 if (position == 0){
                     mBinding!!.tvNoSavedArticles.visibility = View.VISIBLE
+                    val emptyList: MutableList<Article> = mutableListOf()
+                    adapter.differ.submitList(emptyList)
                 }
 
                 Snackbar.make(view, "Article Deleted!", Snackbar.LENGTH_LONG).apply {

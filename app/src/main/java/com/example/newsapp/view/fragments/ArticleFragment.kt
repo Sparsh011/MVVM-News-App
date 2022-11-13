@@ -47,4 +47,9 @@ class ArticleFragment : Fragment(R.layout.fragment_article) {
             Toast.makeText(context, "Article Saved!", Toast.LENGTH_SHORT).show()
         }
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mBinding = null
+    }
 }

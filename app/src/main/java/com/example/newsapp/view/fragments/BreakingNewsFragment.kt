@@ -130,4 +130,9 @@ class BreakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
         mBinding?.pbLoadingBreakingNews?.isVisible = false
         isLoading = false
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mBinding = null
+    }
 }

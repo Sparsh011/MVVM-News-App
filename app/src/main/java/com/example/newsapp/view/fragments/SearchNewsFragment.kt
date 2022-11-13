@@ -104,4 +104,9 @@ class SearchNewsFragment : Fragment(R.layout.fragment_search_news) {
     private fun hideProgressBar(){
         mBinding?.pbLoadingSearchNews?.isVisible = false
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mBinding = null
+    }
 }

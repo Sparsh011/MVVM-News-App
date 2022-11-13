@@ -18,7 +18,7 @@
             android:id="@+id/ivArticleImage"
             android:layout_width="@dimen/_130sdp"
             android:layout_height="@dimen/_70sdp"
-            android:scaleType="centerCrop"
+            android:scaleType="fitCenter"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 

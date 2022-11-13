@@ -48,6 +48,7 @@ class NewsAdapter(
 
         Glide.with(fragment)
             .load(article.urlToImage)
+            .placeholder(R.drawable.loading)
             .into(holder.ivArticleImage)
 
 
