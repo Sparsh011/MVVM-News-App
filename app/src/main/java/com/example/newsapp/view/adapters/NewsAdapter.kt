@@ -51,6 +51,13 @@ class NewsAdapter(
             .placeholder(R.drawable.loading)
             .into(holder.ivArticleImage)
 
+        if(fragment is SavedNewsFragment) {
+            holder.removeFromSaved.visibility = View.VISIBLE
+            holder.removeFromSaved.setOnClickListener{
+                fragment.removeArticleDueToButtonClick(position, fragment.requireView())
+            }
+        }
+
 
         holder.itemView.setOnClickListener{
             if (fragment is BreakingNewsFragment){
@@ -75,11 +82,6 @@ class NewsAdapter(
         val tvPublishedAt: TextView = itemView.findViewById(R.id.tvPublishedAt)
         val tvTitle: TextView = itemView.findViewById(R.id.tvTitle)
         val ivArticleImage : ImageView = itemView.findViewById(R.id.ivArticleImage)
+        val removeFromSaved: ImageView = itemView.findViewById(R.id.removeFromSaved)
     }
-
-//    var onItemClickListener: ((Article) -> Unit)? = null
-//
-//    fun setOnItemClickListener(listener: (Article) -> Unit){
-//        onItemClickListener = listener
-//    }
 }

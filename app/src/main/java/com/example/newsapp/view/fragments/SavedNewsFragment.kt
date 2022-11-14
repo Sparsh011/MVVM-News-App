@@ -1,9 +1,11 @@
 package com.example.newsapp.view.fragments
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.accessibility.AccessibilityEventCompat.setAction
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -24,6 +26,8 @@ class SavedNewsFragment : Fragment(R.layout.fragment_saved_news) {
     private val mSaveArticleViewModel : SaveArticleViewModel by viewModels {
         SaveArticleViewModelProviderFactory(((requireActivity().application) as NewsApplication).repository)
     }
+    private lateinit var adapter: NewsAdapter
+    private lateinit var contextF: Context
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         mBinding = FragmentSavedNewsBinding.inflate(inflater, container, false)
@@ -33,7 +37,7 @@ class SavedNewsFragment : Fragment(R.layout.fragment_saved_news) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val adapter = NewsAdapter(this)
+        adapter = NewsAdapter(this)
 
         mSaveArticleViewModel.savedArticlesList.observe(viewLifecycleOwner){ articles ->
 
@@ -88,6 +92,23 @@ class SavedNewsFragment : Fragment(R.layout.fragment_saved_news) {
 
     fun articleWebView(article: Article){
         findNavController().navigate(SavedNewsFragmentDirections.actionSavedNewsFragmentToArticleFragment(article))
+    }
+
+    fun removeArticleDueToButtonClick(position: Int, view: View){
+        val article = adapter.differ.currentList[position]
+        mSaveArticleViewModel.delete(article)
+        if (position == 0){
+            mBinding!!.tvNoSavedArticles.visibility = View.VISIBLE
+            val emptyList: MutableList<Article> = mutableListOf()
+            adapter.differ.submitList(emptyList)
+        }
+
+        Snackbar.make(view, "Article Deleted!", Snackbar.LENGTH_LONG).apply {
+            setAction("UNDO"){
+                mSaveArticleViewModel.insert(article)
+                Snackbar.make(view, "Article Restored!", Snackbar.LENGTH_SHORT).show()
+            }
+        }.show()
     }
 
     override fun onDestroyView() {
