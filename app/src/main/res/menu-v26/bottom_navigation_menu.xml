@@ -3,6 +3,7 @@
 
     <item android:id="@+id/breakingNewsFragment"
         android:title="Breaking News"
+        android:iconTint="@color/white"
         android:icon="@drawable/ic_breaking_news" />
 
     <item android:id="@+id/searchNewsFragment"
