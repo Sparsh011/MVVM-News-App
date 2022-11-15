@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/my_black"
+    tools:context=".view.activities.ChooseCountry">
+
+    <TextView
+        android:id="@+id/tvSelectCountry"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Select Country"
+        android:layout_marginTop="@dimen/_30sdp"
+        android:textSize="@dimen/_20sdp"
+        android:textStyle="italic|bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:textColor="@color/white"
+        />
+
+
+    <LinearLayout
+        android:id="@+id/ll1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvSelectCountry"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:layout_marginBottom="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_17sdp"
+
+        >
+
+        <ImageView
+            android:id="@+id/flagAustralia"
+            android:layout_width="@dimen/_80sdp"
+            android:layout_height="@dimen/_45sdp"
+            android:scaleType="fitXY"
+            android:layout_weight="1"
+            tools:src="@color/white"
+            android:layout_margin="@dimen/_15sdp"/>
+
+        <ImageView
+            android:id="@+id/flagIndia"
+            android:layout_width="@dimen/_80sdp"
+            android:layout_height="@dimen/_45sdp"
+            android:scaleType="fitXY"
+            android:layout_weight="1"
+            tools:src="@color/white"
+            android:layout_margin="@dimen/_15sdp"
+            />
+
+        <ImageView
+            android:id="@+id/flagUsa"
+            android:layout_width="@dimen/_80sdp"
+            android:layout_height="@dimen/_45sdp"
+            android:scaleType="fitXY"
+            android:layout_weight="1"
+            tools:src="@color/white"
+            android:layout_margin="@dimen/_15sdp"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ll1"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="@dimen/_10sdp"
+        >
+
+        <ImageView
+            android:id="@+id/flagNZ"
+            android:layout_width="@dimen/_80sdp"
+            android:layout_height="@dimen/_45sdp"
+            android:scaleType="fitXY"
+            android:layout_weight="1"
+            tools:src="@color/white"
+            android:layout_margin="@dimen/_15sdp"/>
+
+        <ImageView
+            android:id="@+id/flagCanada"
+            android:layout_width="@dimen/_80sdp"
+            android:layout_height="@dimen/_45sdp"
+            android:scaleType="fitXY"
+            android:layout_weight="1"
+            tools:src="@color/white"
+            android:layout_margin="@dimen/_15sdp"
+            />
+
+        <ImageView
+            android:id="@+id/flagIsrael"
+            android:layout_width="@dimen/_80sdp"
+            android:layout_height="@dimen/_45sdp"
+            android:scaleType="fitXY"
+            android:layout_weight="1"
+            tools:src="@color/white"
+            android:layout_margin="@dimen/_15sdp"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ll2"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="@dimen/_10sdp"
+        >
+
+        <ImageView
+            android:id="@+id/flagRussia"
+            android:layout_width="@dimen/_80sdp"
+            android:layout_height="@dimen/_45sdp"
+            android:scaleType="fitXY"
+            android:layout_weight="1"
+            tools:src="@color/white"
+            android:layout_margin="@dimen/_15sdp"/>
+
+        <ImageView
+            android:id="@+id/flagSaudi"
+            android:layout_width="@dimen/_80sdp"
+            android:layout_height="@dimen/_45sdp"
+            android:scaleType="fitXY"
+            android:layout_weight="1"
+            tools:src="@color/white"
+            android:layout_margin="@dimen/_15sdp"
+            />
+
+        <ImageView
+            android:id="@+id/flagSouthKorea"
+            android:layout_width="@dimen/_80sdp"
+            android:layout_height="@dimen/_45sdp"
+            android:scaleType="fitXY"
+            android:layout_weight="1"
+            tools:src="@color/white"
+            android:layout_margin="@dimen/_15sdp"
+            />
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

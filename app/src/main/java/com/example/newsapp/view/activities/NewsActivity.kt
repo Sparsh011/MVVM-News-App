@@ -3,6 +3,7 @@ package com.example.newsapp.view.activities
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -10,6 +11,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.newsapp.R
 import com.example.newsapp.databinding.ActivityNewsBinding
+import com.example.newsapp.util.Constants
 
 class NewsActivity : AppCompatActivity() {
     private lateinit var mBinding: ActivityNewsBinding
