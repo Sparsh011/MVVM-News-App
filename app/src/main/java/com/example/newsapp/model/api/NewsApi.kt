@@ -1,7 +1,7 @@
 package com.example.newsapp.model.api
 
 import com.example.newsapp.util.Constants.Companion.API_KEY
-import com.example.newsapp.util.Constants.Companion.SELECTED_COUNTRY
+import com.example.newsapp.util.Variables.Companion.SELECTED_COUNTRY
 import io.reactivex.rxjava3.core.Single
 import retrofit2.http.GET
 import retrofit2.http.Query

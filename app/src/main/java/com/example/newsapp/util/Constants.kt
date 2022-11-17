@@ -19,10 +19,7 @@ class Constants {
         const val SAUDI_FLAG = "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/Flag_of_Saudi_Arabia.svg/383px-Flag_of_Saudi_Arabia.svg.png"
 
 
-        var SELECTED_COUNTRY = ""
-        var IS_COUNTRY_SELECTED = false
         const val SHARED_PREF_FOR_SELECTING_COUNTRY = "selectCountrySharedPref"
-        const val BOOLEAN_COUNTRY_ADDED_TO_SHARED_PREF = "countryAddedToSharedPref"
         const val COUNTRY_NAME_IN_SHARED_PREF = ""
 
     }

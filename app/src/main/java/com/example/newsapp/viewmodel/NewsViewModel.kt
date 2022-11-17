@@ -13,7 +13,7 @@ import androidx.lifecycle.MutableLiveData
 import com.example.newsapp.application.NewsApplication
 import com.example.newsapp.model.api.NewsResponse
 import com.example.newsapp.model.api.RetrofitInstance
-import com.example.newsapp.util.Constants.Companion.SELECTED_COUNTRY
+import com.example.newsapp.util.Variables.Companion.SELECTED_COUNTRY
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.observers.DisposableSingleObserver
