@@ -92,6 +92,44 @@ class NewsViewModel(app: Application): AndroidViewModel(app) {
         )
     }
 
+    fun refreshingLayoutBreakingNewsCall(){
+        try {
+            if (hasInternetConnection()){
+                getRefreshedBreakingNewsFromAPI()
+            }
+            else{
+                Log.i("No Internet", "No internet connection")
+            }
+        } catch (t: Throwable){
+            when(t){
+                is IOException -> Log.i("IOException", t.message.toString())
+                else -> Log.i("Other Exception", t.message.toString())
+            }
+        }
+    }
+
+    private fun getRefreshedBreakingNewsFromAPI(){
+        loadNews.value = true
+        compositeDisposable.add(
+            retrofitInstance.getBreakingNews(SELECTED_COUNTRY, breakingNewsPageNumber)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(object : DisposableSingleObserver<NewsResponse>(){
+                    override fun onSuccess(value: NewsResponse) {
+                        newsResponse.value = value
+                        loadNews.value = false
+                        errorLoadingNews.value = false
+                    }
+
+                    override fun onError(e: Throwable) {
+                        loadNews.value = false
+                        errorLoadingNews.value = true
+                        e.printStackTrace()
+                    }
+                })
+        )
+    }
+
     fun safeBreakingNewsCall(){
         try {
             if (hasInternetConnection()){

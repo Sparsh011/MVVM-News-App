@@ -1,13 +1,17 @@
 package com.example.newsapp.view.fragments
 
+import android.content.Context
+import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.AbsListView
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -16,7 +20,11 @@ import com.example.newsapp.R
 import com.example.newsapp.databinding.FragmentBreakingNewsBinding
 import com.example.newsapp.model.api.Article
 import com.example.newsapp.model.api.NewsResponse
+import com.example.newsapp.util.Constants
+import com.example.newsapp.util.Constants.Companion.COUNTRY_NAME_IN_SHARED_PREF
 import com.example.newsapp.util.Constants.Companion.QUERY_PAGE_SIZE
+import com.example.newsapp.util.Variables.Companion.SELECTED_COUNTRY
+import com.example.newsapp.view.activities.ChooseCountry
 import com.example.newsapp.view.adapters.NewsAdapter
 import com.example.newsapp.viewmodel.NewsViewModel
 
@@ -41,6 +49,40 @@ class BreakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
 
         breakingNewsViewModel.safeBreakingNewsCall()
         breakingNewsViewModelObserver()
+
+        mBinding!!.srlBreakingNews.setOnRefreshListener {
+            breakingNewsViewModel.refreshingLayoutBreakingNewsCall()
+            mBinding!!.srlBreakingNews.isRefreshing = false
+        }
+
+
+        val menuHost: MenuHost = requireActivity()
+
+        menuHost.addMenuProvider(object : MenuProvider {
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                menuInflater.inflate(R.menu.menu_action_bar, menu)
+            }
+
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                when(menuItem.itemId){
+                    R.id.changeCountry ->{
+                        val sharedPref : SharedPreferences = activity!!.getSharedPreferences(Constants.SHARED_PREF_FOR_SELECTING_COUNTRY, Context.MODE_PRIVATE)
+                        val editor = sharedPref.edit()
+                        editor.apply {
+                            putString(COUNTRY_NAME_IN_SHARED_PREF, "no")
+                            apply()
+                        }
+
+                        val intent = Intent(context, ChooseCountry::class.java)
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                        startActivity(intent)
+                        requireActivity().finish()
+                        return true
+                    }
+                    else -> return false
+                }
+            }
+        }, viewLifecycleOwner, Lifecycle.State.RESUMED)
     }
 
     private fun breakingNewsViewModelObserver(){

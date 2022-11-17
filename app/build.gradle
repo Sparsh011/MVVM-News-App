@@ -97,4 +97,7 @@ dependencies {
 
 //    To improve request's response speed -
     implementation('com.squareup.okhttp3:okhttp-dnsoverhttps:4.9.0')
+
+    //    Swipe refresh layout -
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
 }

@@ -187,6 +187,7 @@ class ChooseCountry : AppCompatActivity() {
         if (!country.equals("no")) {
             SELECTED_COUNTRY = country.toString()
             val intent = Intent(this, NewsActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
             startActivity(intent)
             finish()
         }
