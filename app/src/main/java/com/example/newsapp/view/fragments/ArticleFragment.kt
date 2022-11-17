@@ -1,5 +1,6 @@
 package com.example.newsapp.view.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -42,9 +43,24 @@ class ArticleFragment : Fragment(R.layout.fragment_article) {
                 }
             }
         }
-        mBinding?.fabSaveNews?.setOnClickListener{
+
+        mBinding!!.fabSaveNews.setOnClickListener{
             mSaveArticleViewModel.insert(args.article)
             Toast.makeText(context, "Article Saved!", Toast.LENGTH_SHORT).show()
+        }
+
+        mBinding!!.fabShareNews.setOnClickListener{
+            val type = "text/plain"
+            val subject = "Checkout this dish recipe"
+            var extraText = ""
+            val shareWith = "Share with"
+
+            extraText = "Hey, Checkout This Article!\n\n ${args.article.url.toString()}"
+            val intent = Intent(Intent.ACTION_SEND)
+            intent.type = type
+            intent.putExtra(Intent.EXTRA_SUBJECT, subject)
+            intent.putExtra(Intent.EXTRA_TEXT, extraText)
+            startActivity(Intent.createChooser(intent, shareWith))
         }
     }
 
