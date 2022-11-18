@@ -35,6 +35,11 @@ class NewsViewModel(app: Application): AndroidViewModel(app) {
     val searchNewsResponse = MutableLiveData<NewsResponse>()
     val errorLoadingSearchNews = MutableLiveData<Boolean>()
 
+//    Category News States -
+    val loadCategoryNews = MutableLiveData<Boolean>()
+    val categoryNewsResponse = MutableLiveData<NewsResponse>()
+    val errorLoadingCategoryNews = MutableLiveData<Boolean>()
+
 //    Page number for pagination -
     var breakingNewsPageNumber = 1
 
@@ -108,6 +113,7 @@ class NewsViewModel(app: Application): AndroidViewModel(app) {
         }
     }
 
+
     private fun getRefreshedBreakingNewsFromAPI(){
         loadNews.value = true
         compositeDisposable.add(
@@ -160,6 +166,45 @@ class NewsViewModel(app: Application): AndroidViewModel(app) {
                 else -> Log.i("Other Exception", t.message.toString())
             }
         }
+    }
+
+    fun safeCategoryNewsCall(){
+        try {
+            if (hasInternetConnection()){
+                categoryNewsAPICall()
+            }
+            else{
+                Log.i("No Internet", "No internet connection")
+            }
+        } catch (t: Throwable){
+            when(t){
+                is IOException -> Log.i("IOException", t.message.toString())
+                else -> Log.i("Other Exception", t.message.toString())
+            }
+        }
+    }
+
+    private fun categoryNewsAPICall() {
+        loadCategoryNews.value = true
+        compositeDisposable.add(
+            retrofitInstance.getCategoryNews()
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(object : DisposableSingleObserver<NewsResponse>(){
+                    override fun onSuccess(value: NewsResponse) {
+                        categoryNewsResponse.value = value
+                        loadCategoryNews.value = false
+                        errorLoadingCategoryNews.value = false
+                        Log.i("Category response", "$categoryNewsResponse")
+                    }
+
+                    override fun onError(e: Throwable) {
+                        loadCategoryNews.value = false
+                        errorLoadingCategoryNews.value = true
+                        e.printStackTrace()
+                    }
+                })
+        )
     }
 
     private fun hasInternetConnection() : Boolean{

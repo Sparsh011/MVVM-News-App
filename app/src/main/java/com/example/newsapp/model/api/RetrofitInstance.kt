@@ -2,6 +2,8 @@ package com.example.newsapp.model.api
 
 import com.example.newsapp.util.Constants.Companion.API_KEY
 import com.example.newsapp.util.Constants.Companion.BASE_URL
+import com.example.newsapp.util.Variables.Companion.SELECTED_CATEGORY
+import com.example.newsapp.util.Variables.Companion.SELECTED_COUNTRY
 import io.reactivex.rxjava3.core.Single
 import okhttp3.Cache
 import okhttp3.HttpUrl.Companion.toHttpUrl
@@ -51,5 +53,9 @@ class RetrofitInstance {
 
     fun getSearchNewsResult(searchQuery: String): Single<NewsResponse>{
         return api.searchNews(searchQuery, 1, API_KEY)
+    }
+
+    fun getCategoryNews() : Single<NewsResponse>{
+        return api.getCategoryNews(SELECTED_COUNTRY, SELECTED_CATEGORY, 1, API_KEY)
     }
 }

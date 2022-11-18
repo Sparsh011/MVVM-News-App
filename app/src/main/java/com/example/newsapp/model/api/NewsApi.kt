@@ -20,6 +20,22 @@ interface NewsApi {
         apiKey: String = API_KEY,
         ) : Single<NewsResponse>
 
+    @GET("v2/top-headlines")
+    fun getCategoryNews(
+        @Query("country")
+        country: String = SELECTED_COUNTRY,
+
+        @Query("category")
+        category: String = "general",
+
+        @Query("page")
+        pageNumber: Int = 1,
+
+        @Query("apiKey")
+        apiKey: String = API_KEY,
+        ) : Single<NewsResponse>
+
+
 
     @GET("v2/everything")
     fun searchNews(

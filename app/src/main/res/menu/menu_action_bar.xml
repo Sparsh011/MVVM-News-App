@@ -5,4 +5,7 @@
     android:title="Change Country"
     android:icon="@drawable/ic_baseline_outlined_flag_24" />
 
+    <item android:id="@+id/selectCategory"
+        android:title="News By Category"
+        android:icon="@drawable/ic_baseline_outlined_flag_24" />
 </menu>

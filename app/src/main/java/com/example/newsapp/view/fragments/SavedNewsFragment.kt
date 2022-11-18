@@ -95,20 +95,41 @@ class SavedNewsFragment : Fragment(R.layout.fragment_saved_news) {
     }
 
     fun removeArticleDueToButtonClick(position: Int, view: View){
-        val article = adapter.differ.currentList[position]
-        mSaveArticleViewModel.delete(article)
-        if (position == 0){
-            mBinding!!.tvNoSavedArticles.visibility = View.VISIBLE
-            val emptyList: MutableList<Article> = mutableListOf()
-            adapter.differ.submitList(emptyList)
+        if (position >= adapter.differ.currentList.size){
+            val realPosition = adapter.differ.currentList.size - 1
+            val article = adapter.differ.currentList[realPosition]
+
+            mSaveArticleViewModel.delete(article)
+            if (realPosition == 0){
+                mBinding!!.tvNoSavedArticles.visibility = View.VISIBLE
+                val emptyList: MutableList<Article> = mutableListOf()
+                adapter.differ.submitList(emptyList)
+            }
+
+            Snackbar.make(view, "Article Deleted!", Snackbar.LENGTH_LONG).apply {
+                setAction("UNDO"){
+                    mSaveArticleViewModel.insert(article)
+                    Snackbar.make(view, "Article Restored!", Snackbar.LENGTH_SHORT).show()
+                }
+            }.show()
         }
 
-        Snackbar.make(view, "Article Deleted!", Snackbar.LENGTH_LONG).apply {
-            setAction("UNDO"){
-                mSaveArticleViewModel.insert(article)
-                Snackbar.make(view, "Article Restored!", Snackbar.LENGTH_SHORT).show()
+        else{
+            val article = adapter.differ.currentList[position]
+            mSaveArticleViewModel.delete(article)
+            if (position == 0){
+                mBinding!!.tvNoSavedArticles.visibility = View.VISIBLE
+                val emptyList: MutableList<Article> = mutableListOf()
+                adapter.differ.submitList(emptyList)
             }
-        }.show()
+
+            Snackbar.make(view, "Article Deleted!", Snackbar.LENGTH_LONG).apply {
+                setAction("UNDO"){
+                    mSaveArticleViewModel.insert(article)
+                    Snackbar.make(view, "Article Restored!", Snackbar.LENGTH_SHORT).show()
+                }
+            }.show()
+        }
     }
 
     override fun onDestroyView() {

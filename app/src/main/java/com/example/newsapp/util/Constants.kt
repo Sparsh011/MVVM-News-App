@@ -22,5 +22,19 @@ class Constants {
         const val SHARED_PREF_FOR_SELECTING_COUNTRY = "selectCountrySharedPref"
         const val COUNTRY_NAME_IN_SHARED_PREF = ""
 
+        fun categories() : ArrayList<String>{
+            val list = ArrayList<String>()
+
+            list.add("General")
+            list.add("Sports")
+            list.add("Science")
+            list.add("Technology")
+            list.add("Business")
+            list.add("Health")
+            list.add("Entertainment")
+
+            return list
+        }
+
     }
 }
