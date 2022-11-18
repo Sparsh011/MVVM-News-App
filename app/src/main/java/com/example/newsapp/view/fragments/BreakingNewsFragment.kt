@@ -74,7 +74,7 @@ class BreakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
                         }
 
                         val intent = Intent(context, ChooseCountry::class.java)
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                         startActivity(intent)
                         requireActivity().finish()
                         return true

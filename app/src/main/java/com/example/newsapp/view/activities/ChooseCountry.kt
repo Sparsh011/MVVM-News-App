@@ -75,7 +75,9 @@ class ChooseCountry : AppCompatActivity() {
         mBinding.flagAustralia.setOnClickListener {
             val intent = Intent(this, NewsActivity::class.java)
             SELECTED_COUNTRY = "au"
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             startActivity(intent)
+            this.finish()
 
             editor.apply {
                 putString(COUNTRY_NAME_IN_SHARED_PREF, SELECTED_COUNTRY)
@@ -86,7 +88,9 @@ class ChooseCountry : AppCompatActivity() {
         mBinding.flagIndia.setOnClickListener {
             val intent = Intent(this, NewsActivity::class.java)
             SELECTED_COUNTRY = "in"
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             startActivity(intent)
+            this.finish()
 
             editor.apply {
                 putString(COUNTRY_NAME_IN_SHARED_PREF, SELECTED_COUNTRY)
@@ -97,7 +101,9 @@ class ChooseCountry : AppCompatActivity() {
         mBinding.flagUsa.setOnClickListener {
             val intent = Intent(this, NewsActivity::class.java)
             SELECTED_COUNTRY = "us"
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             startActivity(intent)
+            this.finish()
 
             editor.apply {
                 putString(COUNTRY_NAME_IN_SHARED_PREF, SELECTED_COUNTRY)
@@ -109,7 +115,10 @@ class ChooseCountry : AppCompatActivity() {
         mBinding.flagNZ.setOnClickListener {
             val intent = Intent(this, NewsActivity::class.java)
             SELECTED_COUNTRY = "nz"
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+
             startActivity(intent)
+            this.finish()
 
             editor.apply {
                 putString(COUNTRY_NAME_IN_SHARED_PREF, SELECTED_COUNTRY)
@@ -121,7 +130,9 @@ class ChooseCountry : AppCompatActivity() {
         mBinding.flagCanada.setOnClickListener {
             val intent = Intent(this, NewsActivity::class.java)
             SELECTED_COUNTRY = "ca"
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             startActivity(intent)
+            this.finish()
 
             editor.apply {
                 putString(COUNTRY_NAME_IN_SHARED_PREF, SELECTED_COUNTRY)
@@ -133,7 +144,9 @@ class ChooseCountry : AppCompatActivity() {
         mBinding.flagIsrael.setOnClickListener {
             val intent = Intent(this, NewsActivity::class.java)
             SELECTED_COUNTRY = "il"
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             startActivity(intent)
+            this.finish()
 
             editor.apply {
                 putString(COUNTRY_NAME_IN_SHARED_PREF, SELECTED_COUNTRY)
@@ -145,7 +158,9 @@ class ChooseCountry : AppCompatActivity() {
         mBinding.flagSaudi.setOnClickListener {
             val intent = Intent(this, NewsActivity::class.java)
             SELECTED_COUNTRY = "sa"
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             startActivity(intent)
+            this.finish()
 
             editor.apply {
                 putString(COUNTRY_NAME_IN_SHARED_PREF, SELECTED_COUNTRY)
@@ -157,7 +172,10 @@ class ChooseCountry : AppCompatActivity() {
         mBinding.flagSouthKorea.setOnClickListener {
             val intent = Intent(this, NewsActivity::class.java)
             SELECTED_COUNTRY = "kr"
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+
             startActivity(intent)
+            this.finish()
 
             editor.apply {
                 putString(COUNTRY_NAME_IN_SHARED_PREF, SELECTED_COUNTRY)
@@ -169,7 +187,10 @@ class ChooseCountry : AppCompatActivity() {
         mBinding.flagRussia.setOnClickListener {
             val intent = Intent(this, NewsActivity::class.java)
             SELECTED_COUNTRY = "ru"
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+
             startActivity(intent)
+            this.finish()
 
             editor.apply {
                 putString(COUNTRY_NAME_IN_SHARED_PREF, SELECTED_COUNTRY)
