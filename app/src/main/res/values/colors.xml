@@ -9,4 +9,6 @@
     <color name="white">#FFFFFFFF</color>
     <color name="my_black">#1A1A25</color>
     <color name="my_green">#64FFDA</color>
+    <color name="my_bg_colour">#2C2C3E</color>
+    <color name="shimmer_text_colour">#1F1F2C</color>
 </resources>

@@ -1,11 +1,9 @@
 package com.example.newsapp.view.fragments
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.accessibility.AccessibilityEventCompat.setAction
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -27,7 +25,6 @@ class SavedNewsFragment : Fragment(R.layout.fragment_saved_news) {
         SaveArticleViewModelProviderFactory(((requireActivity().application) as NewsApplication).repository)
     }
     private lateinit var adapter: NewsAdapter
-    private lateinit var contextF: Context
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         mBinding = FragmentSavedNewsBinding.inflate(inflater, container, false)

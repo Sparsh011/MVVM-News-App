@@ -21,13 +21,13 @@ import com.example.newsapp.util.Constants.Companion.SOUTH_KOREA_FLAG
 import com.example.newsapp.util.Constants.Companion.USA_FLAG
 
 class ChooseCountry : AppCompatActivity() {
-    private lateinit var mBinding: ActivityChooseCountryBinding
+    private var mBinding: ActivityChooseCountryBinding? = null
     private lateinit var sharedPref: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mBinding = ActivityChooseCountryBinding.inflate(layoutInflater)
-        setContentView(mBinding.root)
+        setContentView(mBinding!!.root)
 
         supportActionBar!!.hide()
 
@@ -38,41 +38,41 @@ class ChooseCountry : AppCompatActivity() {
 
         Glide.with(this)
             .load(AUSTRALIAN_FLAG)
-            .into(mBinding.flagAustralia)
+            .into(mBinding!!.flagAustralia)
 
         Glide.with(this)
             .load(INDIAN_FLAG)
-            .into(mBinding.flagIndia)
+            .into(mBinding!!.flagIndia)
 
         Glide.with(this)
             .load(USA_FLAG)
-            .into(mBinding.flagUsa)
+            .into(mBinding!!.flagUsa)
 
         Glide.with(this)
             .load(CANADA_FLAG)
-            .into(mBinding.flagCanada)
+            .into(mBinding!!.flagCanada)
 
         Glide.with(this)
             .load(ISRAEL_FLAG)
-            .into(mBinding.flagIsrael)
+            .into(mBinding!!.flagIsrael)
 
         Glide.with(this)
             .load(NZ_FLAG)
-            .into(mBinding.flagNZ)
+            .into(mBinding!!.flagNZ)
 
         Glide.with(this)
             .load(RUSSIAN_FLAG)
-            .into(mBinding.flagRussia)
+            .into(mBinding!!.flagRussia)
 
         Glide.with(this)
             .load(SAUDI_FLAG)
-            .into(mBinding.flagSaudi)
+            .into(mBinding!!.flagSaudi)
 
         Glide.with(this)
             .load(SOUTH_KOREA_FLAG)
-            .into(mBinding.flagSouthKorea)
+            .into(mBinding!!.flagSouthKorea)
 
-        mBinding.flagAustralia.setOnClickListener {
+        mBinding!!.flagAustralia.setOnClickListener {
             val intent = Intent(this, NewsActivity::class.java)
             SELECTED_COUNTRY = "au"
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
@@ -85,7 +85,7 @@ class ChooseCountry : AppCompatActivity() {
             }
         }
 
-        mBinding.flagIndia.setOnClickListener {
+        mBinding!!.flagIndia.setOnClickListener {
             val intent = Intent(this, NewsActivity::class.java)
             SELECTED_COUNTRY = "in"
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
@@ -98,7 +98,7 @@ class ChooseCountry : AppCompatActivity() {
             }
         }
 
-        mBinding.flagUsa.setOnClickListener {
+        mBinding!!.flagUsa.setOnClickListener {
             val intent = Intent(this, NewsActivity::class.java)
             SELECTED_COUNTRY = "us"
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
@@ -112,7 +112,7 @@ class ChooseCountry : AppCompatActivity() {
             }
         }
 
-        mBinding.flagNZ.setOnClickListener {
+        mBinding!!.flagNZ.setOnClickListener {
             val intent = Intent(this, NewsActivity::class.java)
             SELECTED_COUNTRY = "nz"
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
@@ -127,7 +127,7 @@ class ChooseCountry : AppCompatActivity() {
             }
         }
 
-        mBinding.flagCanada.setOnClickListener {
+        mBinding!!.flagCanada.setOnClickListener {
             val intent = Intent(this, NewsActivity::class.java)
             SELECTED_COUNTRY = "ca"
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
@@ -141,7 +141,7 @@ class ChooseCountry : AppCompatActivity() {
             }
         }
 
-        mBinding.flagIsrael.setOnClickListener {
+        mBinding!!.flagIsrael.setOnClickListener {
             val intent = Intent(this, NewsActivity::class.java)
             SELECTED_COUNTRY = "il"
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
@@ -155,7 +155,7 @@ class ChooseCountry : AppCompatActivity() {
             }
         }
 
-        mBinding.flagSaudi.setOnClickListener {
+        mBinding!!.flagSaudi.setOnClickListener {
             val intent = Intent(this, NewsActivity::class.java)
             SELECTED_COUNTRY = "sa"
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
@@ -169,7 +169,7 @@ class ChooseCountry : AppCompatActivity() {
             }
         }
 
-        mBinding.flagSouthKorea.setOnClickListener {
+        mBinding!!.flagSouthKorea.setOnClickListener {
             val intent = Intent(this, NewsActivity::class.java)
             SELECTED_COUNTRY = "kr"
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
@@ -184,7 +184,7 @@ class ChooseCountry : AppCompatActivity() {
             }
         }
 
-        mBinding.flagRussia.setOnClickListener {
+        mBinding!!.flagRussia.setOnClickListener {
             val intent = Intent(this, NewsActivity::class.java)
             SELECTED_COUNTRY = "ru"
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
@@ -212,6 +212,11 @@ class ChooseCountry : AppCompatActivity() {
             startActivity(intent)
             finish()
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mBinding = null
     }
 }
 

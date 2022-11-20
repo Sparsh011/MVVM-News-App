@@ -30,6 +30,7 @@ import com.example.newsapp.view.activities.ChooseCountry
 import com.example.newsapp.view.adapters.CategoryAdapter
 import com.example.newsapp.view.adapters.NewsAdapter
 import com.example.newsapp.viewmodel.NewsViewModel
+import com.facebook.shimmer.ShimmerFrameLayout
 
 class BreakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
     private lateinit var breakingNewsViewModel: NewsViewModel
@@ -37,7 +38,6 @@ class BreakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
     private lateinit var mCustomListDialog: Dialog
 
     private var mBinding: FragmentBreakingNewsBinding? = null
-
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         mBinding = FragmentBreakingNewsBinding.inflate(inflater, container, false)
@@ -50,11 +50,14 @@ class BreakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
         setupRecyclerView()
         breakingNewsViewModel = ViewModelProvider(this)[NewsViewModel::class.java]
 
-
         breakingNewsViewModel.safeBreakingNewsCall()
         breakingNewsViewModelObserver()
 
         mBinding!!.srlBreakingNews.setOnRefreshListener {
+
+//            TODO - bugs while using SRL
+
+
             if (SELECTED_CATEGORY == "NA") {
                 breakingNewsViewModel.refreshingLayoutBreakingNewsCall()
                 mBinding!!.srlBreakingNews.isRefreshing = false
@@ -167,6 +170,8 @@ class BreakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
                 val totalPages = it.totalResults / QUERY_PAGE_SIZE + 2
                 isLastPage = breakingNewsViewModel.breakingNewsPageNumber == totalPages
                 hideProgressBar()
+                mBinding!!.shimmerLayout.stopShimmer()
+                mBinding!!.shimmerLayout.visibility = View.GONE
             }
         }
 
@@ -174,6 +179,8 @@ class BreakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
             loadNews?.let {
                 Log.i("Loading news", "$loadNews")
                 showProgressBar()
+                mBinding!!.shimmerLayout.startShimmer()
+                mBinding!!.shimmerLayout.visibility = View.VISIBLE
             }
         }
 
@@ -181,6 +188,8 @@ class BreakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
             dataError?.let {
                 Log.i("Fetching news error", "$dataError")
                 hideProgressBar()
+                mBinding!!.shimmerLayout.stopShimmer()
+                mBinding!!.shimmerLayout.visibility = View.GONE
             }
         }
     }
@@ -193,6 +202,8 @@ class BreakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
 
                 setNewsResponseInUI(it)
                 hideProgressBar()
+                mBinding!!.shimmerLayout.stopShimmer()
+                mBinding!!.shimmerLayout.visibility = View.GONE
             }
         }
 
@@ -200,6 +211,8 @@ class BreakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
             loadNews?.let {
                 Log.i("Loading news", "$loadNews")
                 showProgressBar()
+                mBinding!!.shimmerLayout.startShimmer()
+                mBinding!!.shimmerLayout.visibility = View.VISIBLE
             }
         }
 
@@ -207,6 +220,8 @@ class BreakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
             dataError?.let {
                 Log.i("Fetching news error", "$dataError")
                 hideProgressBar()
+                mBinding!!.shimmerLayout.stopShimmer()
+                mBinding!!.shimmerLayout.visibility = View.GONE
             }
         }
     }
@@ -228,12 +243,12 @@ class BreakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
 
     //    Showing and hiding progress bar - 
     private fun showProgressBar() {
-        mBinding?.pbLoadingBreakingNews?.isVisible = true
+//        mBinding?.pbLoadingBreakingNews?.isVisible = true
         isLoading = true
     }
 
     private fun hideProgressBar() {
-        mBinding?.pbLoadingBreakingNews?.isVisible = false
+//        mBinding?.pbLoadingBreakingNews?.isVisible = false
         isLoading = false
     }
 

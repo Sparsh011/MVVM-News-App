@@ -5,7 +5,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -41,12 +40,15 @@ class SearchNewsFragment : Fragment(R.layout.fragment_search_news) {
 
         var job: Job? = null
 
-        mBinding?.etSearch?.addTextChangedListener{ editable ->
+        mBinding!!.shimmerLayoutSearchNews.stopShimmer()
+        mBinding!!.shimmerLayoutSearchNews.visibility = View.INVISIBLE
+
+        mBinding?.etSearch?.addTextChangedListener { editable ->
             job?.cancel()
             job = MainScope().launch {
                 delay(SEARCH_NEWS_TIME_DELAY)
                 editable?.let {
-                    if (editable.toString().isNotEmpty()){
+                    if (editable.toString().isNotEmpty()) {
                         searchViewModel.safeSearchNewsCall(editable.toString())
                     }
                 }
@@ -56,26 +58,33 @@ class SearchNewsFragment : Fragment(R.layout.fragment_search_news) {
         searchNewsViewModelObserver()
     }
 
-    private fun searchNewsViewModelObserver(){
-        searchViewModel.searchNewsResponse.observe(viewLifecycleOwner){ searchNewsResponse ->
+    private fun searchNewsViewModelObserver() {
+        searchViewModel.searchNewsResponse.observe(viewLifecycleOwner) { searchNewsResponse ->
             searchNewsResponse?.let {
                 mBinding?.rvSearchNews?.visibility = View.VISIBLE
                 setNewsResponseInUI(searchNewsResponse)
-                hideProgressBar()
+
+                mBinding!!.shimmerLayoutSearchNews.stopShimmer()
+                mBinding!!.shimmerLayoutSearchNews.visibility = View.GONE
+
             }
         }
 
-        searchViewModel.loadSearchNews.observe(viewLifecycleOwner){ loadNews ->
+        searchViewModel.loadSearchNews.observe(viewLifecycleOwner) { loadNews ->
             loadNews?.let {
                 Log.i("Loading news", "$loadNews")
-                showProgressBar()
+
+                mBinding!!.shimmerLayoutSearchNews.visibility = View.VISIBLE
+                mBinding!!.shimmerLayoutSearchNews.startShimmer()
+
             }
         }
 
-        searchViewModel.errorLoadingSearchNews.observe(viewLifecycleOwner){ dataError ->
+        searchViewModel.errorLoadingSearchNews.observe(viewLifecycleOwner) { dataError ->
             dataError?.let {
                 Log.i("Fetching news error", "$dataError")
-                hideProgressBar()
+                mBinding!!.shimmerLayoutSearchNews.visibility = View.GONE
+                mBinding!!.shimmerLayoutSearchNews.stopShimmer()
             }
         }
     }
@@ -93,16 +102,8 @@ class SearchNewsFragment : Fragment(R.layout.fragment_search_news) {
         }
     }
 
-    fun articleWebView(article: Article){
+    fun articleWebView(article: Article) {
         findNavController().navigate(SearchNewsFragmentDirections.actionSearchNewsFragmentToArticleFragment(article))
-    }
-
-    private fun showProgressBar(){
-        mBinding?.pbLoadingSearchNews?.isVisible = true
-    }
-
-    private fun hideProgressBar(){
-        mBinding?.pbLoadingSearchNews?.isVisible = false
     }
 
     override fun onDestroy() {
