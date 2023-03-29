@@ -36,10 +36,10 @@ class ArticleFragment : Fragment(R.layout.fragment_article) {
 
         args.let {
             val article = it.article
-            mBinding?.webView.apply {
-                this?.webViewClient = WebViewClient()
+            mBinding?.webView?.apply {
+                this.webViewClient = WebViewClient()
                 article.url.let { url ->
-                    this?.loadUrl(url.toString())
+                    this.loadUrl(url.toString())
                 }
             }
         }
