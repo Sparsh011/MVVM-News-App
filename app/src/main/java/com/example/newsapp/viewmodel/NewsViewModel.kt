@@ -22,12 +22,12 @@ import java.io.IOException
 
 class NewsViewModel(app: Application): AndroidViewModel(app) {
     private val retrofitInstance = RetrofitInstance()
-
+    private val TAG = "NewsViewModel"
     private val compositeDisposable = CompositeDisposable()
 
 //    BreakingNews states -
     val loadNews = MutableLiveData<Boolean>()
-    val newsResponse = MutableLiveData<NewsResponse>()
+    val newsResponse = MutableLiveData<NewsResponse?>()
     val errorLoadingNews = MutableLiveData<Boolean>()
 
 //    Search News states -
@@ -46,7 +46,7 @@ class NewsViewModel(app: Application): AndroidViewModel(app) {
     private fun getBreakingNewsFromAPI(){
         loadNews.value = true
         compositeDisposable.add(
-            retrofitInstance.getBreakingNews(SELECTED_COUNTRY, breakingNewsPageNumber)
+            retrofitInstance.getBreakingNews(SELECTED_COUNTRY)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(object : DisposableSingleObserver<NewsResponse>(){
@@ -98,6 +98,7 @@ class NewsViewModel(app: Application): AndroidViewModel(app) {
     }
 
     fun refreshingLayoutBreakingNewsCall(){
+        Log.d(TAG, "refreshingLayoutBreakingNewsCall: Here")
         try {
             if (hasInternetConnection()){
                 getRefreshedBreakingNewsFromAPI()
@@ -116,12 +117,14 @@ class NewsViewModel(app: Application): AndroidViewModel(app) {
 
     private fun getRefreshedBreakingNewsFromAPI(){
         loadNews.value = true
+        newsResponse.value = null
         compositeDisposable.add(
-            retrofitInstance.getBreakingNews(SELECTED_COUNTRY, breakingNewsPageNumber)
+            retrofitInstance.getBreakingNews(SELECTED_COUNTRY)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(object : DisposableSingleObserver<NewsResponse>(){
                     override fun onSuccess(value: NewsResponse) {
+                        Log.d(TAG, "onSuccess: $value")
                         newsResponse.value = value
                         loadNews.value = false
                         errorLoadingNews.value = false

@@ -47,8 +47,8 @@ class RetrofitInstance {
         .build()
         .create(NewsApi::class.java)
 
-    fun getBreakingNews(country: String, pageNumber: Int) : Single<NewsResponse>{
-        return api.getBreakingNews(country, pageNumber, API_KEY)
+    fun getBreakingNews(country: String) : Single<NewsResponse>{
+        return api.getBreakingNews(country, API_KEY)
     }
 
     fun getSearchNewsResult(searchQuery: String): Single<NewsResponse>{
@@ -56,6 +56,6 @@ class RetrofitInstance {
     }
 
     fun getCategoryNews() : Single<NewsResponse>{
-        return api.getCategoryNews(SELECTED_COUNTRY, SELECTED_CATEGORY, 1, API_KEY)
+        return api.getCategoryNews(SELECTED_COUNTRY, SELECTED_CATEGORY, API_KEY)
     }
 }

@@ -13,9 +13,6 @@ interface NewsApi {
         @Query("country")
         country: String = SELECTED_COUNTRY,
 
-        @Query("page")
-        pageNumber: Int = 1,
-
         @Query("apiKey")
         apiKey: String = API_KEY,
         ) : Single<NewsResponse>
@@ -28,8 +25,6 @@ interface NewsApi {
         @Query("category")
         category: String = "general",
 
-        @Query("page")
-        pageNumber: Int = 1,
 
         @Query("apiKey")
         apiKey: String = API_KEY,

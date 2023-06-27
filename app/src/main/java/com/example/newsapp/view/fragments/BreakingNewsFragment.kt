@@ -10,7 +10,6 @@ import android.view.*
 import android.widget.AbsListView
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
@@ -30,13 +29,12 @@ import com.example.newsapp.view.activities.ChooseCountry
 import com.example.newsapp.view.adapters.CategoryAdapter
 import com.example.newsapp.view.adapters.NewsAdapter
 import com.example.newsapp.viewmodel.NewsViewModel
-import com.facebook.shimmer.ShimmerFrameLayout
 
 class BreakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
     private lateinit var breakingNewsViewModel: NewsViewModel
     private lateinit var newsAdapter: NewsAdapter
     private lateinit var mCustomListDialog: Dialog
-
+    private val TAG = "BreakingNewsFragment"
     private var mBinding: FragmentBreakingNewsBinding? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -47,6 +45,7 @@ class BreakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        mCustomListDialog = context?.let { Dialog(it) }!!
         setupRecyclerView()
         breakingNewsViewModel = ViewModelProvider(this)[NewsViewModel::class.java]
 
@@ -56,7 +55,7 @@ class BreakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
         mBinding!!.srlBreakingNews.setOnRefreshListener {
 
 //            TODO - bugs while using SRL
-
+            Log.d(TAG, "Refreshing SRL")
 
             if (SELECTED_CATEGORY == "NA") {
                 breakingNewsViewModel.refreshingLayoutBreakingNewsCall()
